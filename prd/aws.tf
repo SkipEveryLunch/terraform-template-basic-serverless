@@ -71,3 +71,19 @@ module "cloudwatch_log_group" {
   project_name = local.project_name
   env          = local.env
 }
+
+/******************************************************************************
+ * Lambda
+ ******************************************************************************/
+module "lambda" {
+  source = "../modules/aws/lambda"
+
+  project_name              = local.project_name
+  env                       = local.env
+  role_arn                  = module.iam_role.arn_lambda
+  s3_bucket_name            = module.s3.bucket_name_lambda_deploy
+  s3_key                    = "lambda-initial.zip"
+  security_group_id         = module.security_group.id_lambda
+  subnet_id                 = module.subnet.id_private_1a
+  cloudwatch_log_group_name = module.cloudwatch_log_group.name_lambda_api
+}
