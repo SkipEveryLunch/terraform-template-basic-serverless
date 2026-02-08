@@ -19,6 +19,9 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# Lambda
+lambda/*.zip
+
 # OS
 .DS_Store
 Thumbs.db
