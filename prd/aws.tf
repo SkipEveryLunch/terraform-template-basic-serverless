@@ -15,8 +15,7 @@ data "aws_acm_certificate" "main" {
  * VPC
  ******************************************************************************/
 module "vpc" {
-  source = "../modules/aws/vpc"
-
+  source       = "../modules/aws/vpc"
   project_name = local.project_name
   env          = local.env
 }
@@ -25,8 +24,7 @@ module "vpc" {
  * Subnet
  ******************************************************************************/
 module "subnet" {
-  source = "../modules/aws/subnet"
-
+  source       = "../modules/aws/subnet"
   project_name = local.project_name
   env          = local.env
   vpc_id       = module.vpc.id
@@ -36,8 +34,7 @@ module "subnet" {
  * Route Table
  ******************************************************************************/
 module "route_table" {
-  source = "../modules/aws/route_table"
-
+  source       = "../modules/aws/route_table"
   project_name = local.project_name
   env          = local.env
   vpc_id       = module.vpc.id
@@ -48,8 +45,7 @@ module "route_table" {
  * Security Group
  ******************************************************************************/
 module "security_group" {
-  source = "../modules/aws/security_group"
-
+  source       = "../modules/aws/security_group"
   project_name = local.project_name
   env          = local.env
   vpc_id       = module.vpc.id
@@ -59,8 +55,7 @@ module "security_group" {
  * IAM Role
  ******************************************************************************/
 module "iam_role" {
-  source = "../modules/aws/iam_role"
-
+  source       = "../modules/aws/iam_role"
   project_name = local.project_name
   env          = local.env
 }
@@ -69,8 +64,7 @@ module "iam_role" {
  * S3
  ******************************************************************************/
 module "s3" {
-  source = "../modules/aws/s3"
-
+  source       = "../modules/aws/s3"
   project_name = local.project_name
   env          = local.env
 }
@@ -79,8 +73,7 @@ module "s3" {
  * CloudWatch Log Group
  ******************************************************************************/
 module "cloudwatch_log_group" {
-  source = "../modules/aws/cloudwatch_log_group"
-
+  source       = "../modules/aws/cloudwatch_log_group"
   project_name = local.project_name
   env          = local.env
 }
