@@ -30,3 +30,14 @@ module "route_table" {
   vpc_id       = module.vpc.id
   subnet_id    = module.subnet.id_private_1a
 }
+
+/******************************************************************************
+ * Security Group
+ ******************************************************************************/
+module "security_group" {
+  source = "../modules/aws/security_group"
+
+  project_name = local.project_name
+  env          = local.env
+  vpc_id       = module.vpc.id
+}
