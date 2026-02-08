@@ -87,3 +87,15 @@ module "lambda" {
   subnet_id                 = module.subnet.id_private_1a
   cloudwatch_log_group_name = module.cloudwatch_log_group.name_lambda_api
 }
+
+/******************************************************************************
+ * API Gateway
+ ******************************************************************************/
+module "api_gateway" {
+  source = "../modules/aws/api_gateway"
+
+  project_name         = local.project_name
+  env                  = local.env
+  lambda_invoke_arn    = module.lambda.invoke_arn
+  lambda_function_name = module.lambda.function_name
+}
