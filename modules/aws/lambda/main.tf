@@ -25,6 +25,4 @@ resource "aws_lambda_function" "api" {
       source_code_hash
     ]
   }
-
-  depends_on = [var.lambda_api.cloudwatch_log_group_name]
 }
