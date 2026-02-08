@@ -41,3 +41,13 @@ module "security_group" {
   env          = local.env
   vpc_id       = module.vpc.id
 }
+
+/******************************************************************************
+ * IAM Role
+ ******************************************************************************/
+module "iam_role" {
+  source = "../modules/aws/iam_role"
+
+  project_name = local.project_name
+  env          = local.env
+}
