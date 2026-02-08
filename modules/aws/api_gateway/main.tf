@@ -58,6 +58,22 @@ resource "aws_api_gateway_deployment" "api" {
   }
 }
 
+// カスタムドメイン
+resource "aws_api_gateway_domain_name" "api" {
+  domain_name              = var.custom_domain_name
+  regional_certificate_arn = var.certificate_arn
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
+}
+
+// カスタムドメインとAPIのマッピング
+resource "aws_api_gateway_base_path_mapping" "api" {
+  api_id      = aws_api_gateway_rest_api.api.id
+  domain_name = aws_api_gateway_domain_name.api.domain_name
+  stage_name  = aws_api_gateway_stage.default.stage_name
+}
+
 // Lambda呼び出し権限
 resource "aws_lambda_permission" "api_gateway" {
   action        = "lambda:InvokeFunction"
