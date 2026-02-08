@@ -51,3 +51,13 @@ module "iam_role" {
   project_name = local.project_name
   env          = local.env
 }
+
+/******************************************************************************
+ * S3
+ ******************************************************************************/
+module "s3" {
+  source = "../modules/aws/s3"
+
+  project_name = local.project_name
+  env          = local.env
+}
