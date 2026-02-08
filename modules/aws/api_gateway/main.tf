@@ -33,7 +33,7 @@ resource "aws_api_gateway_integration" "proxy_any" {
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   content_handling        = "CONVERT_TO_TEXT"
-  uri                     = var.lambda_invoke_arn
+  uri                     = var.api.lambda_invoke_arn
 }
 
 // ステージ: default
@@ -60,8 +60,8 @@ resource "aws_api_gateway_deployment" "api" {
 
 // カスタムドメイン
 resource "aws_api_gateway_domain_name" "api" {
-  domain_name              = var.custom_domain_name
-  regional_certificate_arn = var.certificate_arn
+  domain_name              = var.api.custom_domain_name
+  regional_certificate_arn = var.api.certificate_arn
   endpoint_configuration {
     types = ["REGIONAL"]
   }
@@ -77,7 +77,7 @@ resource "aws_api_gateway_base_path_mapping" "api" {
 // Lambda呼び出し権限
 resource "aws_lambda_permission" "api_gateway" {
   action        = "lambda:InvokeFunction"
-  function_name = var.lambda_function_name
+  function_name = var.api.lambda_function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*/*"
 }

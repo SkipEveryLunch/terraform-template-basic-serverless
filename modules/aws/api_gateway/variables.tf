@@ -2,10 +2,11 @@ variable "project_name" {}
 
 variable "env" {}
 
-variable "lambda_invoke_arn" {}
-
-variable "lambda_function_name" {}
-
-variable "custom_domain_name" {}
-
-variable "certificate_arn" {}
+variable "api" {
+  type = object({
+    lambda_invoke_arn    = string
+    lambda_function_name = string
+    custom_domain_name   = string
+    certificate_arn      = string
+  })
+}
