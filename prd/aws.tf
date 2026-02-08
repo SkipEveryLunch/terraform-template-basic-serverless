@@ -61,3 +61,13 @@ module "s3" {
   project_name = local.project_name
   env          = local.env
 }
+
+/******************************************************************************
+ * CloudWatch Log Group
+ ******************************************************************************/
+module "cloudwatch_log_group" {
+  source = "../modules/aws/cloudwatch_log_group"
+
+  project_name = local.project_name
+  env          = local.env
+}
