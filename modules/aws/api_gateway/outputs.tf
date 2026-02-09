@@ -11,13 +11,13 @@ output "invoke_url" {
 }
 
 output "custom_domain_name" {
-  value = aws_api_gateway_domain_name.api.domain_name
+  value = try(aws_api_gateway_domain_name.api[0].domain_name, null)
 }
 
 output "custom_domain_regional_domain_name" {
-  value = aws_api_gateway_domain_name.api.regional_domain_name
+  value = try(aws_api_gateway_domain_name.api[0].regional_domain_name, null)
 }
 
 output "custom_domain_regional_zone_id" {
-  value = aws_api_gateway_domain_name.api.regional_zone_id
+  value = try(aws_api_gateway_domain_name.api[0].regional_zone_id, null)
 }

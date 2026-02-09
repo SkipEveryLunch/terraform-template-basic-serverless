@@ -105,8 +105,10 @@ module "api_gateway" {
   api = {
     lambda_invoke_arn    = module.lambda.invoke_arn
     lambda_function_name = module.lambda.function_name
-    custom_domain_name   = local.api_domain
-    certificate_arn      = data.aws_acm_certificate.main.arn
+  }
+  custom_domain = {
+    domain_name     = local.api_domain
+    certificate_arn = data.aws_acm_certificate.main.arn
   }
 }
 

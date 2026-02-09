@@ -1,6 +1,6 @@
 resource "aws_api_gateway_rest_api" "api" {
   name                         = "${var.project_name}-${var.env}"
-  disable_execute_api_endpoint = true
+  disable_execute_api_endpoint = var.custom_domain != null ? true : false
   endpoint_configuration {
     types = ["REGIONAL"]
   }
@@ -82,8 +82,9 @@ resource "aws_api_gateway_deployment" "api" {
 
 // カスタムドメイン
 resource "aws_api_gateway_domain_name" "api" {
-  domain_name              = var.api.custom_domain_name
-  regional_certificate_arn = var.api.certificate_arn
+  count                    = var.custom_domain != null ? 1 : 0
+  domain_name              = var.custom_domain.domain_name
+  regional_certificate_arn = var.custom_domain.certificate_arn
   endpoint_configuration {
     types = ["REGIONAL"]
   }
@@ -91,8 +92,9 @@ resource "aws_api_gateway_domain_name" "api" {
 
 // カスタムドメインとAPIのマッピング
 resource "aws_api_gateway_base_path_mapping" "api" {
+  count       = var.custom_domain != null ? 1 : 0
   api_id      = aws_api_gateway_rest_api.api.id
-  domain_name = aws_api_gateway_domain_name.api.domain_name
+  domain_name = aws_api_gateway_domain_name.api[0].domain_name
   stage_name  = aws_api_gateway_stage.default.stage_name
 }
 
