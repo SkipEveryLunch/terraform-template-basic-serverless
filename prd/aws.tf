@@ -106,27 +106,27 @@ module "api_gateway" {
     lambda_invoke_arn    = module.lambda.invoke_arn
     lambda_function_name = module.lambda.function_name
   }
-  custom_domain = {
-    domain_name     = local.api_domain
-    certificate_arn = data.aws_acm_certificate.main.arn
-  }
+  // custom_domain = {
+  //   domain_name     = local.api_domain
+  //   certificate_arn = data.aws_acm_certificate.main.arn
+  // }
 }
 
 /******************************************************************************
  * Route53
  ******************************************************************************/
-module "route53" {
-  source  = "../modules/aws/route53"
-  zone_id = data.aws_route53_zone.main.zone_id
-  records = [
-    {
-      name = local.api_domain
-      type = "A"
-      alias = {
-        zone_id                = module.api_gateway.custom_domain_regional_zone_id
-        name                   = module.api_gateway.custom_domain_regional_domain_name
-        evaluate_target_health = false
-      }
-    }
-  ]
-}
+// module "route53" {
+//   source  = "../modules/aws/route53"
+//   zone_id = data.aws_route53_zone.main.zone_id
+//   records = [
+//     {
+//       name = local.api_domain
+//       type = "A"
+//       alias = {
+//         zone_id                = module.api_gateway.custom_domain_regional_zone_id
+//         name                   = module.api_gateway.custom_domain_regional_domain_name
+//         evaluate_target_health = false
+//       }
+//     }
+//   ]
+// }
