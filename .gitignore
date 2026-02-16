@@ -21,6 +21,7 @@ terraform.rc
 
 # Lambda
 lambda/*.zip
+lambda/.venv/
 
 # OS
 .DS_Store
