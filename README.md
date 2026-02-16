@@ -65,13 +65,36 @@ terraform apply
 - **外部通信なし**: NAT Gateway不要、機械学習推論のみ
 - **CI/CDフレンドリー**: Terraformはインフラ管理のみ、コードデプロイはGitHub Actionsで実施
 
-## デプロイフロー
+## CI/CD (GitHub Actions)
 
-Terraformはインフラの構築・設定変更のみを担当。
-Lambdaコードのデプロイは以下の流れで実施：
+`main` ブランチへの `lambda/` 配下の変更pushで自動デプロイが実行される。
 
-1. GitHub Actions: コードビルド & ZIP作成
-2. S3へアップロード
-3. `aws lambda update-function-code` でデプロイ
+### GitHub Actions Variables の設定
 
-詳細は `PLAN.md` を参照。
+リポジトリの **Settings > Secrets and variables > Actions > Variables** に以下を設定：
+
+| Name | Value |
+|------|-------|
+| `OIDC_IAM_ROLE_ARN` | 下記コマンドで取得 |
+
+```bash
+aws iam get-role --role-name <project_name>-github-actions-<env> --query 'Role.Arn' --output text --profile <profile>
+```
+
+### ローカル実行
+
+Dockerで FastAPI をローカル起動できる。
+
+```bash
+cd lambda
+docker build -t serverless-basic-api .
+docker run -p 8000:8000 serverless-basic-api
+```
+
+### 自動デプロイフロー
+
+1. `main` ブランチへpush（`lambda/**` の変更時のみ発火）
+2. OIDC認証でAWSにアクセス
+3. Lambdaコードをビルド & ZIP作成
+4. S3へアップロード
+5. `aws lambda update-function-code` でデプロイ
