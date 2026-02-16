@@ -14,9 +14,6 @@ permissions:
 env:
   OIDC_IAM_ROLE_ARN: ${{ vars.OIDC_IAM_ROLE_ARN }}
   AWS_REGION: ap-northeast-1
-  S3_BUCKET: serverless-basic-lambda-deploy-prd
-  S3_KEY: lambda-initial.zip
-  FUNCTION_NAME: serverless-basic-api-prd
 
 jobs:
   deploy:
@@ -32,20 +29,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Build
-        working-directory: ./lambda
-        run: |
-          pip install fastapi mangum -t package --quiet --platform manylinux2014_x86_64 --only-binary=:all: --python-version 3.12
-          cd package && zip -r ../${{ env.S3_KEY }} . --quiet
-          cd .. && zip ${{ env.S3_KEY }} main.py
       - name: Deploy
         working-directory: ./lambda
-        run: |
-          aws s3 cp ${{ env.S3_KEY }} s3://${{ env.S3_BUCKET }}/${{ env.S3_KEY }}
-          aws lambda update-function-code \
-            --function-name ${{ env.FUNCTION_NAME }} \
-            --s3-bucket ${{ env.S3_BUCKET }} \
-            --s3-key ${{ env.S3_KEY }} \
-            --region ${{ env.AWS_REGION }} \
-            --query 'LastUpdateStatus' \
-            --output text
+        run: make deploy

@@ -4,7 +4,6 @@ FUNCTION_NAME := serverless-basic-api-prd
 S3_BUCKET := serverless-basic-lambda-deploy-prd
 S3_KEY := lambda-initial.zip
 ZIP_FILE := lambda-initial.zip
-AWS_PROFILE := playground
 AWS_REGION := ap-northeast-1
 BUILD_DIR := package
 
@@ -21,14 +20,13 @@ build: clean ## Build Lambda deployment package
 
 deploy: build ## Deploy Lambda function
 	@echo "Uploading to S3..."
-	aws s3 cp $(ZIP_FILE) s3://$(S3_BUCKET)/$(S3_KEY) --profile $(AWS_PROFILE)
+	aws s3 cp $(ZIP_FILE) s3://$(S3_BUCKET)/$(S3_KEY)
 	@echo "Updating Lambda function..."
 	aws lambda update-function-code \
 		--function-name $(FUNCTION_NAME) \
 		--s3-bucket $(S3_BUCKET) \
 		--s3-key $(S3_KEY) \
 		--region $(AWS_REGION) \
-		--profile $(AWS_PROFILE) \
 		--query 'LastUpdateStatus' \
 		--output text
 	@echo "Deployment complete!"
