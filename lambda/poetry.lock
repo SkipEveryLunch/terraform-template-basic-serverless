@@ -176,6 +176,21 @@ files = [
 all = ["flake8 (>=7.1.1)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2)"]
 
 [[package]]
+name = "mangum"
+version = "0.21.0"
+description = "AWS Lambda support for ASGI applications"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "mangum-0.21.0-py3-none-any.whl", hash = "sha256:309e48f5c629542516c5106ecf079f4ec08809ed50df882238d98fe1392820c7"},
+    {file = "mangum-0.21.0.tar.gz", hash = "sha256:e31ed72d67f9958fa4379f65df77729906dec6dfa00afa6ed4e06c77833000de"},
+]
+
+[package.dependencies]
+typing-extensions = "*"
+
+[[package]]
 name = "pydantic"
 version = "2.12.5"
 description = "Data validation using Python type hints"
@@ -762,4 +777,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "30d96027c1d8bc57db4430327ca9b86ce703f5dad61cf00d196a28864c9cdb84"
+content-hash = "f9f84a655b1721134e4769fd31137b360e5873a1433785cf4b60e4f1fefce8b9"

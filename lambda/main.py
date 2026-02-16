@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from mangum import Mangum
 
 app = FastAPI()
 
@@ -11,3 +12,6 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+lambda_handler = Mangum(app)
