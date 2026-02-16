@@ -52,12 +52,25 @@ module "security_group" {
 }
 
 /******************************************************************************
+ * OIDC GitHub Actions
+ ******************************************************************************/
+module "oidc_github_actions" {
+  source = "../modules/aws/oidc_github_actions"
+}
+
+/******************************************************************************
  * IAM Role
  ******************************************************************************/
 module "iam_role" {
   source       = "../modules/aws/iam_role"
   project_name = local.project_name
   env          = local.env
+  github_actions = {
+    oidc_provider_arn = module.oidc_github_actions.github_actions_arn
+    account_id        = local.account_id
+    github_repo       = local.github_repo
+    s3_bucket_arn     = module.s3.arn_lambda_deploy
+  }
 }
 
 /******************************************************************************

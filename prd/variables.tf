@@ -5,4 +5,5 @@ locals {
   region       = "ap-northeast-1"
   domain       = "skip-every-lunch-pg.click"
   api_domain   = "api.${local.domain}"
+  github_repo  = "SkipEveryLunch/terraform-template-basic-serverless"
 }
