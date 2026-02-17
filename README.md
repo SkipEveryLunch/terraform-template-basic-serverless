@@ -73,8 +73,8 @@ terraform apply
 
 リポジトリの **Settings > Secrets and variables > Actions > Variables** に以下を設定：
 
-| Name | Value |
-|------|-------|
+| Name                | Value              |
+| ------------------- | ------------------ |
 | `OIDC_IAM_ROLE_ARN` | 下記コマンドで取得 |
 
 ```bash
@@ -89,6 +89,19 @@ Dockerで FastAPI をローカル起動できる。
 cd lambda
 docker build -t serverless-basic-api .
 docker run -p 8000:8000 serverless-basic-api
+```
+
+### ローカルからの手動デプロイ
+
+前提条件:
+
+- AWS CLI設定済み（適切なprofileを設定済）
+- Python 3.12
+- zip コマンド
+
+```bash
+cd lambda
+make deploy
 ```
 
 ### 自動デプロイフロー
